@@ -11,3 +11,51 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login-form {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.login-form button {
+  margin-right: 10px;
+}
+
+.input-recipe {
+  width: auto;
+  margin: 0 15%;
+  text-align:center;
+}
+
+.input-recipe button {
+  margin-left: 5px;
+}
+
+.content{
+  margin:15px auto;
+  height:80%;
+}
+
+footer {
+  background-color: #F1F1F1;
+  padding: 10px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.recipe a {
+  margin-right:10px;
+}
+/* .card-deck{
+  display: inline-block;
+  width: 30%;
+}
+.card-deck img{
+  width: 100%;
+} */
+.card-deck a{
+  margin-right: 10px;
+}

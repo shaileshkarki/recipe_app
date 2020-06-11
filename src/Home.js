@@ -5,10 +5,15 @@ import Card from './Card';
 
 // const apiKey = process.env.SPOONACULAR_APIKEY;
 class Home extends React.Component {
-  state = {
-      query: "",
-      results: [],
-      isLoading: true
+  constructor(props) {
+    super();
+    this.state = {
+        query: "",
+        results: [],
+        isLoading: true,
+        userID: props.userID
+    }
+    // console.log(props);
   }
 
   componentDidMount() {
@@ -22,19 +27,31 @@ class Home extends React.Component {
         isLoading: false
       })
     })
+    if(this.state.results.length!==0) {
+      axios.post('http://localhost:4000/recipe',this.state.results)
+      .then(function(response) {
+        console.log(this.state.results);
+      })
+    }
   }
 
   handleSearch = () => {
-      const url = `https://api.spoonacular.com/recipes/search?apiKey=0fe88fb2905449f68ae3dd65d0cf47c0&query=${this.state.query}&number=5&includeInstruction=true`;
-      // console.log(url);
-      axios.get(url).then(res => {
-        console.log(res.data.results);
-        this.setState({
-          results: res.data.results,
-          isLoading: false
-        })
+    const url = `https://api.spoonacular.com/recipes/search?apiKey=0fe88fb2905449f68ae3dd65d0cf47c0&query=${this.state.query}&number=5&includeInstruction=true`;
+    // console.log(url);
+    axios.get(url).then(res => {
+      // console.log(res.data.results);
+      this.setState({
+        results: res.data.results,
+        isLoading: false
       })
-    }
+      if(res.data.results.length!==0) {
+        axios.post('http://localhost:4000/recipe',this.state.results)
+        .then(function(response) {
+          // console.log(this.state.results);
+        })
+      }
+    })
+  }
     
   handleChange = (event) => {
     this.setState({
@@ -51,7 +68,7 @@ class Home extends React.Component {
                 <button onClick={this.handleSearch}>Search Recipe</button>
             </div>
             <div className="search-results">
-                <Card results={this.state.results} />
+                <Card results={this.state.results} userID={this.state.userID}/>
             </div>   
                    
         </div>
