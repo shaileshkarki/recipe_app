@@ -1,0 +1,11 @@
+.contact-us a, .contact-us a:visited{
+    text-decoration: none;
+    font-size: 1.5rem;
+    /* color: #89f5f5; */
+}
+
+.contact-us h2{
+    font-size: 1.7rem;
+    border-bottom: 3px solid #89f5f5;
+    padding-bottom: 5px;
+} 

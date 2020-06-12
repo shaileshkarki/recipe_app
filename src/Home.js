@@ -60,15 +60,16 @@ class Home extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return(
         <div className="home">
             <div className="input-recipe">
-              <h1>Search Recipe By Dish Name</h1>
+              <h1>Search Recipe:</h1>
                 <input type="text" onChange={this.handleChange}/>
                 <button onClick={this.handleSearch}>Search Recipe</button>
             </div>
             <div className="search-results">
-                <Card results={this.state.results} userID={this.state.userID}/>
+                <Card results={this.state.results} userID={this.state.userID} handleDeleteRecipe={this.props.handleDeleteRecipe}/>
             </div>   
                    
         </div>

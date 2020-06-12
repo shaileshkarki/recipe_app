@@ -6,9 +6,12 @@ import Home from './Home';
 import Recipe from './Recipe';
 import SignUp from './SignUp';
 import Account from './Account';
-import {Nav, Navbar} from 'react-bootstrap';
-
+// import {Nav, Navbar} from 'react-bootstrap';
+import axios from 'axios';
 import styled from 'styled-components';
+import ContactUs from'./ContactUs';
+import AboutUs from'./AboutUs';
+
 import {
   // BrowserRouter as Router,
   Switch,
@@ -34,32 +37,37 @@ class App extends React.Component {
         username: value.username
       })
     }
-
-    
-
+    // let history = useHistory();
+    // history.push("/account");
   }
-
+  handleDeleteRecipe=(id) =>{
+    let recipe_id = id;
+    axios.post(`http://localhost:4000/deleteRecipe/${recipe_id}`,{
+      "userID": this.state.userID})
+    .then(function(response) {
+      console.log("Deleted successfully");
+    })
+  }
   handleLogOut = ()=>{
     this.setState({
       loginStatus: false,
       userID: 0,
       username: ""
     })
-    Redirect ('/home');
   }
   displayLogin() {
     if(this.state.loginStatus===false) {
       return <div>
-        <Nav.Item><Link to="/login">Login</Link></Nav.Item>
-        <Nav.Item><Link to="/signUp">Sign Up</Link></Nav.Item>
+        <Link to="/login">Login</Link>
+        <Link to="/signUp">Sign Up</Link>
       </div>
     } else {
       return  <div>
-        <Nav.Item><Link to="/account">Account</Link></Nav.Item>
-        <Navbar.Text>
-          Signed in as: {this.state.username}
-        </Navbar.Text>
-        <button onClick={this.handleLogOut}>Log Out</button>
+        <Link to="/account">Account</Link>
+       
+         <Link to="#">Signed in as: {this.state.username}</Link> 
+        
+         <button onClick={this.handleLogOut}>Log Out</button>
       </div>
     }
   }
@@ -83,35 +91,26 @@ class App extends React.Component {
       <React.Fragment>
         <Layout>
           <header>
-          <Styles>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            {/* <Navbar.Brand href="/"> <img
-              src="./assets/logo.svg"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Find Recipe Logo"/>
-            </Navbar.Brand> */}
-            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-            <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-            <Nav className="xl-auto">
-                <Nav.Item><Link to="/">Home</Link></Nav.Item>
-                <Nav.Item><Link to="/recipeByIngredients">Show Recipe By Ingredients</Link></Nav.Item>
-                <Nav.Item><Link to="/aboutUs">About Us</Link></Nav.Item>
-                <Nav.Item><Link to="/contactUs">Contact Us</Link></Nav.Item>
-                {this.displayLogin()}
-            </Nav>
-        </Navbar>
-    </Styles> 
+          <nav>
+            <Link to="/">Home</Link>
+            {/* <Link to="/recipeByIngredients">Show Recipe By Ingredients</Link> */}
+            <Link to="/aboutUs">About Us</Link>
+            <Link to="/contactUs">Contact Us</Link>
+            <div className="login-info">
+              {this.displayLogin()}
+            </div>
+          </nav>
           </header>
           <div className="content">
             <Switch>
-              <Route exact path="/" render={() => <Home userID={this.state.userID} />}/>
+              <Route exact path="/" render={() => <Home userID={this.state.userID} handleDeleteRecipe={this.handleDeleteRecipe}/>}/>
               <Route path='/show/:id' render={(props) => <Recipe {...props} userID={this.state.userID} />}/>
-              <Route path="/recipeByIngredients" component={SearchByIngredients}/>
+              <Route path="/recipeByIngredients"  render={() => <SearchByIngredients userID={this.state.userID} handleDeleteRecipe={this.handleDeleteRecipe}/>}/>
               <Route path='/login'render={() => <Login  handleLogin={this.handleLogin} />}/>
               <Route path="/signUp" component={SignUp}/>
-              <Route path='/account'render={() => <Account  userID={this.state.userID} />}/>
+              <Route path="/aboutUs" component={AboutUs}/>
+              <Route path="/contactUs" component={ContactUs}/>
+              <Route path='/account'render={() => <Account  userID={this.state.userID} handleDeleteRecipe={this.handleDeleteRecipe} />}/>
             </Switch>
           </div>
           <footer>
@@ -125,3 +124,10 @@ class App extends React.Component {
 
 export default App;
           
+{/* <Nav className="xl-auto">
+                <Nav.Item><Link to="/">Home</Link></Nav.Item>
+                <Nav.Item><Link to="/recipeByIngredients">Show Recipe By Ingredients</Link></Nav.Item>
+                <Nav.Item><Link to="/aboutUs">About Us</Link></Nav.Item>
+                <Nav.Item><Link to="/contactUs">Contact Us</Link></Nav.Item>
+                {this.displayLogin()}
+            </Nav> */}

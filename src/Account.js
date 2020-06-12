@@ -15,7 +15,8 @@ class Account extends React.Component{
         this.state = {
             userID: props.userID,
             // userID: props.id,
-            results: []
+            results: [],
+            page:"account"
         }
         console.log(props.userID)
     }
@@ -59,10 +60,11 @@ class Account extends React.Component{
 
     }
     render() {
+        console.log(this.props);
         return (<div>
             <Jumbotron/>
             <div className="search-results">
-                <Card results={this.state.results} userID={this.state.userID}/>
+                <Card results={this.state.results} userID={this.state.userID} handleDeleteRecipe={this.props.handleDeleteRecipe}/>
             </div> 
         </div>
         )

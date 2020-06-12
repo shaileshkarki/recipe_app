@@ -32,7 +32,7 @@ export const Jumbotron = ()=> (
             </div>
             <Container>
                 <h1>Welcome</h1>
-                <p>Search Recipe here</p>
+                <h3>Recipes you saved</h3>
             </Container>
         </Jumbo>
     </Styles>

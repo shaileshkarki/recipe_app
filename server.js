@@ -70,11 +70,23 @@ app.get('/savedRecipes/:userID',(req,res) => {
     let id = Number(req.params.userID);
     console.log(id);
     // let userID = Number(req.params.userID);
-    db.query(`select * from recipe, liked_by where user_id = ${id} and recipe_id = recipe.id;`, (err, dbRes) => {
+    db.query(`select * from recipe, liked_by where liked_by.user_id = ${id} and liked_by.recipe_id = recipe.id;`, (err, dbRes) => {
         console.log(dbRes.rows.length);
         rowCount = dbRes.rows.length;
-            res.json(dbRes.rows);
-        });
+        res.json(dbRes.rows);
+    });
+})
+
+app.post('/deleteRecipe/:recipe_id',(req,res) => {
+    let recipe_id = req.params.recipe_id;
+    let user_id = req.body.userID;
+    db.query(`delete from liked_by where liked_by.user_id = ${user_id} and recipe_id = ${recipe_id};`, (err, dbRes) => {
+        console.log(dbRes.rows.length);
+
+        // rowCount = dbRes.rows.length;
+        res.json({});
+    });
+    
 })
 
 app.post('/login',(req,res)=>{
@@ -100,7 +112,23 @@ app.post('/login',(req,res)=>{
     // console.log("Reached here 2");
 })
 
-
+app.post('/signUp',(req, res) => {
+    let user_name =  req.body.user_name;
+    let email =  req.body.email;
+    let password_digest = req.body.password_digest;
+    console.log("user name ",user_name,"email",email,"password_digest",password_digest);
+    let rowCount = 0;
+    db.query(`select * from users where email = '${email}';`, (err, dbRes) => {
+        // console.log(dbRes.rows.length);
+        rowCount = dbRes.rows.length;
+        if(rowCount == 0) {
+            db.query(`INSERT INTO users (user_name, email,password_digest) VALUES ('${user_name}', '${email}','${password_digest}');`, (err, dbRes) => {
+                console.log("Data inserted:");
+            });
+        }
+    });
+    res.json({"result":"user created"});
+})
 
 app.listen(4000, () => {
     console.log(`Recipe server listening on port 4000`);
@@ -112,3 +140,5 @@ app.listen(4000, () => {
 
 //INSERT INTO recipe (id,title,postcode,img,readyInMinutes) VALUES (1, 'title','img',1);
 // UPDATE  recipe  SET extendedIngredients='extendedIngredients', instructions='instructions' WHERE id=1;
+
+//delete from liked_by where liked_by.user_id = 1 and recipe_id = 651914;

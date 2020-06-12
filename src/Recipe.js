@@ -61,7 +61,7 @@ class Recipe extends React.Component{
                 console.log(`😱 Axios request failed: ${e}`);
             } 
         } else {
-            return  <Redirect  to="/login/" />
+            return  <Redirect  to="/login" />
         }   
     }
 
