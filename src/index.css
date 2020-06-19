@@ -100,3 +100,7 @@ nav a:hover, .logout:hover {
   margin-right:1rem;
   align-items: center;
 }
+
+.panel-default{
+  color:red;
+}

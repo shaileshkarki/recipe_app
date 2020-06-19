@@ -1,21 +1,26 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
-// import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+
 class Login extends Component {
     state = {
         email: "",
         password_digest: "",
-        username: ""
+        username: "",
+        home: false
     }
+
     login(e) {
-        // e.preventdefault();
+       
         console.log(this.props);
         try {
             axios.post(`http://localhost:4000/login`, {
                 "email": this.state.email,
                 "password_digest": this.state.password_digest
             }).then(response => {
+                this.setState({
+                    home:true
+                })
                 this.props.handleLogin(response.data)
             })
             // console.log('👉 Returned data:', response);
@@ -23,8 +28,7 @@ class Login extends Component {
           } catch (e) {
             console.log(`😱 Axios request failed: ${e}`);
           }
-        //   let history = useHistory();
-        //   history.push("/home");
+        
     }
 
     reset() {
@@ -34,6 +38,9 @@ class Login extends Component {
         })
     }
     render() {
+        if(this.state.home === true){
+            return <Redirect to='/' />
+        }
         return (
             <div className="login-form">
                 {/* <form action=""> */}

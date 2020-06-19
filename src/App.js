@@ -17,7 +17,6 @@ import {
   Switch,
   Route,
   Link
-  // useParams
 } from "react-router-dom";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom';
 
@@ -26,7 +25,8 @@ class App extends React.Component {
   state = {
     loginStatus: false,
     userID: 0,
-    username: ""
+    username: "",
+    toHome: false
   }
 
   handleLogin=(value)=>{
@@ -52,13 +52,21 @@ class App extends React.Component {
     this.setState({
       loginStatus: false,
       userID: 0,
-      username: ""
+      username: "",
+      toHome: true
     })
   }
   displayLogin() {
     if(this.state.loginStatus===false) {
       return <div>
-        <Link to="/login">Login</Link>
+        <Link to={
+          {
+            pathname:"/login",
+            state: {
+              from: "root"
+            }
+          }
+        }>Login</Link>
         <Link to="/signUp">Sign Up</Link>
       </div>
     } else {

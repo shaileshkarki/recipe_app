@@ -74,7 +74,6 @@ class SearchByIngredients extends React.Component {
                 <button onClick={this.handleSearch}>Search Recipe</button>
             </div>
             <div className="search-results">
-            {/* {this.state.results} */}
                 <Card results={this.state.results} userID={this.state.userID} handleDeleteRecipe={this.handleDeleteRecipe}/>
             </div>   
                    

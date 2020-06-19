@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 const db = require("./db/config.js");
 var bodyParser = require('body-parser');
 const app = express();
@@ -93,9 +94,9 @@ app.post('/login',(req,res)=>{
     // console.log("Reached here 1");
     let email = req.body.email;
     let password_digest = req.body.password_digest;
-    db.query(`select * from users where users.email='${email}' AND users.password_digest='${password_digest}';`, (err, dbRes) => {
+    db.query(`select * from users where users.email='${email}';`, (err, dbRes) => {
         // console.log(dbRes.rows);
-        if(dbRes.rows.length === 1) {
+        if(bcrypt.compareSync(password_digest, dbRes.rows[0].password_digest)) {
             res.json({
                 "status": true,
                 "userID": dbRes.rows[0].id,
@@ -115,7 +116,7 @@ app.post('/login',(req,res)=>{
 app.post('/signUp',(req, res) => {
     let user_name =  req.body.user_name;
     let email =  req.body.email;
-    let password_digest = req.body.password_digest;
+    let password_digest = bcrypt.hashSync(req.body.password_digest,10);
     console.log("user name ",user_name,"email",email,"password_digest",password_digest);
     let rowCount = 0;
     db.query(`select * from users where email = '${email}';`, (err, dbRes) => {
