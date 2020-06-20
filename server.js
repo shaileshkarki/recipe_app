@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-
+const port = process.env.PORT || 4000;
 
 
 app.get('/', (req, res) => {
@@ -131,7 +131,7 @@ app.post('/signUp',(req, res) => {
     res.json({"result":"user created"});
 })
 
-app.listen(4000, () => {
+app.listen(port, () => {
     console.log(`Recipe server listening on port 4000`);
     
 })
