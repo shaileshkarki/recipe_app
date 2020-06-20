@@ -31,7 +31,7 @@ class SearchByIngredients extends React.Component {
         isLoading: false
       })
       if(this.state.results.length!==0) {
-        axios.post('http://localhost:4000/recipe',this.state.results)
+        axios.post('/recipe',this.state.results)
         .then(function(response) {
           console.log(this.state.results);
         })
@@ -50,7 +50,7 @@ class SearchByIngredients extends React.Component {
         isLoading: false
       })
       if(res.data.results.length!==0) {
-        axios.post('http://localhost:4000/recipe',this.state.results)
+        axios.post('/recipe',this.state.results)
         .then(function(response) {
           // console.log(this.state.results);
         })

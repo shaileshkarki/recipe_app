@@ -18,7 +18,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { Redirect } from 'react-router-dom/cjs/react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 // const apiKey = process.env.SPOONACULAR_APIKEY;
 class App extends React.Component {
@@ -42,7 +42,7 @@ class App extends React.Component {
   }
   handleDeleteRecipe=(id) =>{
     let recipe_id = id;
-    axios.post(`http://localhost:4000/deleteRecipe/${recipe_id}`,{
+    axios.post(`/deleteRecipe/${recipe_id}`,{
       "userID": this.state.userID})
     .then(function(response) {
       console.log("Deleted successfully");
@@ -55,6 +55,9 @@ class App extends React.Component {
       username: "",
       toHome: true
     })
+    if(this.state.toHome) {
+      return <Redirect to='/'/>
+    }
   }
   displayLogin() {
     if(this.state.loginStatus===false) {
@@ -132,10 +135,3 @@ class App extends React.Component {
 
 export default App;
           
-{/* <Nav className="xl-auto">
-                <Nav.Item><Link to="/">Home</Link></Nav.Item>
-                <Nav.Item><Link to="/recipeByIngredients">Show Recipe By Ingredients</Link></Nav.Item>
-                <Nav.Item><Link to="/aboutUs">About Us</Link></Nav.Item>
-                <Nav.Item><Link to="/contactUs">Contact Us</Link></Nav.Item>
-                {this.displayLogin()}
-            </Nav> */}

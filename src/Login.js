@@ -14,7 +14,7 @@ class Login extends Component {
        
         console.log(this.props);
         try {
-            axios.post(`http://localhost:4000/login`, {
+            axios.post(`/login`, {
                 "email": this.state.email,
                 "password_digest": this.state.password_digest
             }).then(response => {

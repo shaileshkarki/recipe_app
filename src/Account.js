@@ -46,7 +46,7 @@ class Account extends React.Component{
     }
     async getSavedRecipes(userID){
         
-        const url = `http://localhost:4000/savedRecipes/${userID}`;
+        const url = `/savedRecipes/${userID}`;
         let result = await axios.get(url);
         
             // console.log(res.data.results);

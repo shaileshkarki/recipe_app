@@ -33,7 +33,7 @@ class Recipe extends React.Component{
                 for(let i = 0; i < this.state.extendedIngredients.length; i++) {
                     ingredients += this.state.extendedIngredients[i].originalString + "ingredient-needed";
                 }
-                axios.post(`http://localhost:4000/recipe/edit/${this.state.id}`,{
+                axios.post(`/recipe/edit/${this.state.id}`,{
                     "instructions": this.state.instructions,
                     "extendedIngredients": ingredients
                 })
@@ -49,7 +49,7 @@ class Recipe extends React.Component{
         let recipe_id = this.state.id;
         if(userID !== 0) {
             try {
-                axios.post(`http://localhost:4000/saveRecipe`, {
+                axios.post(`/saveRecipe`, {
                     "recipe_id": recipe_id,
                     "user_id": userID
                 }).then(response => {
