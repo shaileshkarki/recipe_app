@@ -5,7 +5,9 @@ https://cryptic-eyrie-20577.herokuapp.com/
 ## Introduction
 We can use this app to search recipe based on name or ingredients (work in progress for search using ingredients). If we like a recipe, we can save it for future reference purpose. To save the recipe user must be logged in. The saved recipe can be deleted too, if the user does not want it anymore. 
 Recipe information is coming from Spoonacular API in the beginning, but when user saves it, it is stored in local database.
+The main aim of this project is to learn getting data from the API, creating own API and technologies like Node.js, React, etc.
 
+## Approach
 
 ## Technology used
 #### Backend: Node.js
